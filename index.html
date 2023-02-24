@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stopwatch</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+
+.stopwatch {
+  text-align: center;
+  background-color: rgb(203, 208, 208);
+}
+
+#display {
+  font-size: 3rem;
+}
+
+button {
+  color: #cb8c8c;  
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+</style>
+<body>
+  <div class="stopwatch">
+<i><h1><b>Stop watch!</b></h1></i>
+
+    <u><h1 id="display">00:00:00</h1></u>
+    <button id="startBtn" onclick="start()">Start</button>
+    <button id="stopBtn" onclick="stop()">Stop</button>
+    <button id="resetBtn" onclick="reset()">Reset</button>
+  </div>
+  <script >
+
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
+
+function formatTime(time) {
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time % 3600) / 60);
+  const seconds = time % 60;
+  return `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+function start() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(() => {
+    elapsedTime = Date.now() - startTime;
+    document.getElementById('display').textContent = formatTime(elapsedTime / 1000);
+  }, 10);
+}
+
+function stop() {
+  clearInterval(timerInterval);
+}
+
+function reset() {
+  clearInterval(timerInterval);
+  elapsedTime = 0;
+  document.getElementById('display').textContent = '00:00:00';
+}
+
+  </script>
+</body>
+</html>
